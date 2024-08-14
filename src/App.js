@@ -1,6 +1,7 @@
 import logo from './logo.svg';
 import './App.css';
 import { Component } from 'react';
+import CardList from './components/card-list/card-list.component';
 
 // https://jsonplaceholder.typicode.com/users
 
@@ -45,7 +46,7 @@ class App extends Component {
 
     const { monsters, searchField } = this.state;
     const { onSearchChange } = this
-    
+
     const filteredMonsters = monsters.filter((monster)=>{ 
       return monster.name.toLocaleLowerCase().includes(searchField)
     })
@@ -58,7 +59,9 @@ class App extends Component {
             return <h1 key={m.id}>{m.name}</h1> 
           })
         }
+        <CardList monsters={filteredMonsters}/>
       </div>
+
     );
   }
 }
