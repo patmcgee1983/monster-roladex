@@ -2,6 +2,7 @@ import logo from './logo.svg';
 import './App.css';
 import { Component } from 'react';
 import CardList from './components/card-list/card-list.component';
+import SearchBox from './components/search-box/search-box.component'
 
 // https://jsonplaceholder.typicode.com/users
 
@@ -20,6 +21,15 @@ class App extends Component {
     console.log("constructor")
   }
 
+  onSearchChange = (event)=> { 
+
+    const searchField = event.target.value.toLocaleLowerCase()
+
+    this.setState((state, props)=> {
+      return { searchField }
+    })
+  }
+
   componentDidMount() {
     console.log("Did Mount")
     fetch("https://jsonplaceholder.typicode.com/users")
@@ -32,33 +42,21 @@ class App extends Component {
     }))
   }
 
-  onSearchChange = (event)=> { 
-
-    const searchField = event.target.value.toLocaleLowerCase()
-
-    this.setState((state, props)=> {
-      return { searchField }
-    })
-  }
-
   render() {
     console.log("render")
 
     const { monsters, searchField } = this.state;
-    const { onSearchChange } = this
+    
 
     const filteredMonsters = monsters.filter((monster)=>{ 
       return monster.name.toLocaleLowerCase().includes(searchField)
     })
 
+    console.log(filteredMonsters)
+
     return (
       <div className='App'>
-        <input className='search-box' type='search' placeholder='Search Monsters' onChange={onSearchChange}/>
-        {
-          filteredMonsters.map((m)=> { 
-            return <h1 key={m.id}>{m.name}</h1> 
-          })
-        }
+        <SearchBox className="search-box" placeholder="Search Monsters" onChangeHandler={this.onSearchChange}/>
         <CardList monsters={filteredMonsters}/>
       </div>
 
