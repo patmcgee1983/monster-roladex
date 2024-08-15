@@ -10,7 +10,7 @@ import CardList from './components/card-list/card-list.component';
 class App extends Component {
 
   constructor() {
-    super()
+    super() 
 
     this.state = {
       monsters: [],
